@@ -1,2 +1,4 @@
-package com.threeidiots.myapplication;public class ViewPagerItem {
+package com.threeidiots.myapplication;
+
+public class ViewPagerItem {
 }
