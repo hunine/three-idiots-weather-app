@@ -12,7 +12,6 @@ import com.threeidiots.myapplication.model.WeatherList;
 import com.threeidiots.myapplication.viewmodel.WeatherApiService;
 import java.util.List;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import android.view.View;
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
+
 //        getActionBar().hide();
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
@@ -41,6 +41,23 @@ public class MainActivity extends AppCompatActivity {
         viewpage = findViewById(R.id.pager);
         pageradapter = new ScreenSlideAdapter(this);
         viewpage.setAdapter(pageradapter);
+        viewpage.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                System.out.println("Position: " + position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+            }
+        });
       
 //      API
         apiService = new WeatherApiService();
@@ -65,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("Wind speed", Double.toString(weather.getWind().getSpeed()));
 
                         }
-
                         Log.d("City", weatherList.getLocation().getCity());
                         Log.d("Country", weatherList.getLocation().getCountry());
                     }
@@ -83,12 +99,12 @@ public class MainActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             switch (position){
                 case 0:
-                    return new ViewpagerScreen("First Screen");
+                    return new ViewpagerScreen("First Screen", getPackageName(), R.raw.video1);
 
                 case 1:
-                    return new ViewpagerScreen("Second Screen");
+                    return new ViewpagerScreen("Second Screen", getPackageName(), R.raw.video2);
                 case 2:
-                    return new ViewpagerScreen("Third Screen");
+                    return new ViewpagerScreen("Third Screen", getPackageName(), R.raw.video3);
                 default:
                     return null;
             }
