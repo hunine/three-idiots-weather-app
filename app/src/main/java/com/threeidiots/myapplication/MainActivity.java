@@ -96,10 +96,6 @@ public class MainActivity extends AppCompatActivity {
         txtFeellike = findViewById(R.id.txtfeelike);
         txtHum = findViewById(R.id.txtHumidity);
         txtPrecipation = findViewById(R.id.txtPrecitation);
-
-
-
-
         pageradapter = new ScreenSlideAdapter(this);
         viewpage.setAdapter(pageradapter);
         viewpage.setOffscreenPageLimit(3);
