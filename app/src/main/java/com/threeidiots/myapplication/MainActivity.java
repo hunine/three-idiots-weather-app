@@ -16,6 +16,8 @@ import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.google.android.material.tabs.TabLayout;
 import java.util.List;
 
@@ -25,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int NUM_PAGE = 3;
     private ViewPager2 viewpage;
     private FragmentStateAdapter pageradapter;
+
+    private TextView txtWindy;
+    private TextView txtHum;
+    private TextView txtFeellike;
+    private TextView txtPrecipation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +46,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
       
         viewpage = findViewById(R.id.pager);
+        txtWindy = findViewById(R.id.txtWindy);
+        txtFeellike = findViewById(R.id.txtfeelike);
+        txtHum = findViewById(R.id.txtHumidity);
+        txtPrecipation = findViewById(R.id.txtPrecitation);
+
+
+
+
         pageradapter = new ScreenSlideAdapter(this);
         viewpage.setAdapter(pageradapter);
+        viewpage.setOffscreenPageLimit(3);
         viewpage.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+
             }
 
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 System.out.println("Position: " + position);
+                txtFeellike.setText(String.valueOf(position));
             }
 
             @Override
