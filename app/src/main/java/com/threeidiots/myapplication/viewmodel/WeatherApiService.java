@@ -1,11 +1,7 @@
 package com.threeidiots.myapplication.viewmodel;
 
-import com.threeidiots.myapplication.model.Weather;
 import com.threeidiots.myapplication.model.WeatherApi;
 import com.threeidiots.myapplication.model.WeatherList;
-
-import java.util.List;
-
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Retrofit;
@@ -24,7 +20,7 @@ public class WeatherApiService {
                 .create(WeatherApi.class);
     }
 
-    public Single<WeatherList> getWeatherList() {
-        return api.getWeatherList();
+    public Single<WeatherList> getWeatherList(double latitude, double longitude) {
+        return api.getWeatherList(latitude, longitude);
     }
 }
