@@ -10,10 +10,10 @@
 
 
 
-    <color name="backgroundcolor">#C3CEAA</color>
+    <color name="backgroundcolor">#d1dcb4</color>
     <color name="greycolor">#ADADAD</color>
 
     <color name="textcolor">#5622C6</color>
-    <color name="greytextcolor">#242424</color>
+    <color name="greytextcolor">#343434</color>
 
 </resources>
