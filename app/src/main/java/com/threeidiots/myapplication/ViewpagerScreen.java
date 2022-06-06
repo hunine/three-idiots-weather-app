@@ -71,9 +71,6 @@ public class ViewpagerScreen extends Fragment {
         context = inflatedview.getContext();
         txtTemparature = inflatedview.findViewById(R.id.txttemparature);
 
-
-
-
         String path = "android.resource://" + getPackageName + "/" + video_id;
         videoView.setVideoURI(Uri.parse(path));
         videoView.start();
