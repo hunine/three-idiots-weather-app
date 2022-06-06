@@ -1,11 +1,16 @@
 package com.threeidiots.myapplication;
 
+import android.animation.ValueAnimator;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -15,22 +20,44 @@ import androidx.fragment.app.Fragment;
 
 public class ViewpagerScreen extends Fragment {
 
+    private ImageView WeatherIcon;
+    Context context;
+
     public ViewpagerScreen(String str, String packagename, int id){
         getPackageName = packagename;
         video_id = id;
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
         videoView.start();
+        Animation anim = AnimationUtils.loadAnimation(context, R.anim.bounce);
+        Animation anim2 = AnimationUtils.loadAnimation(context, R.anim.bounce2);
+        WeatherIcon.startAnimation(anim);
+        txtdescription.startAnimation(anim2);
+        startCountAnimation();
+
+    }
+    private void startCountAnimation() {
+        ValueAnimator animator = ValueAnimator.ofInt(15, -10);
+        animator.setDuration(1000);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                txtTemparature.setText(animation.getAnimatedValue().toString() + "°");
+            }
+        });
+        animator.start();
     }
 
     private int video_id;
     private TextView txt;
+    private TextView txtdescription;
     private String getPackageName;
     private View inflatedview = null;
     private VideoView videoView;
+    private TextView txtTemparature;
 
     @Nullable
     @Override
@@ -39,9 +66,10 @@ public class ViewpagerScreen extends Fragment {
 
         inflatedview = inflater.inflate(R.layout.fragment, container, false);
         videoView = inflatedview.findViewById(R.id.videoview);
-
-
-
+        WeatherIcon = inflatedview.findViewById(R.id.weathericon);
+        txtdescription = inflatedview.findViewById(R.id.txtdescription);
+        context = inflatedview.getContext();
+        txtTemparature = inflatedview.findViewById(R.id.txttemparature);
 
         String path = "android.resource://" + getPackageName + "/" + video_id;
         videoView.setVideoURI(Uri.parse(path));

@@ -42,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="24dp"
                     android:paddingBottom="8dp"
+                    android:fontFamily="@font/lato_bold"
                     android:text="Weather now"
                     android:textColor="@color/textcolor"
                     android:textFontWeight="600"
@@ -86,6 +87,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Precipitation"
+                                    android:fontFamily="@font/lato_regular"
                                     android:textColor="@color/greycolor"
                                     android:textFontWeight="400"
                                     android:textSize="16sp" />
@@ -95,6 +97,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="20%"
+                                    android:fontFamily="@font/lato_regular"
                                     android:textColor="@color/textcolor"
                                     android:textFontWeight="1000"
                                     android:textSize="20sp" />
@@ -127,6 +130,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Wind"
+                                    android:fontFamily="@font/lato_regular"
                                     android:textColor="@color/greycolor"
                                     android:textFontWeight="400"
                                     android:textSize="16sp" />
@@ -136,6 +140,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="25 km/h"
+                                    android:fontFamily="@font/lato_regular"
                                     android:textColor="@color/textcolor"
                                     android:textFontWeight="1000"
                                     android:textSize="20sp" />
@@ -178,6 +183,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Fell like"
+                                    android:fontFamily="@font/lato_regular"
                                     android:textColor="@color/greycolor"
                                     android:textFontWeight="400"
                                     android:textSize="16sp" />
@@ -187,6 +193,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="25°C"
+                                    android:fontFamily="@font/lato_regular"
                                     android:textColor="@color/textcolor"
                                     android:textFontWeight="1000"
                                     android:textSize="20sp" />
@@ -220,6 +227,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Humidity"
+                                    android:fontFamily="@font/lato_regular"
                                     android:textColor="@color/greycolor"
                                     android:textFontWeight="400"
                                     android:textSize="16sp" />
@@ -229,6 +237,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="25 km/h"
+                                    android:fontFamily="@font/lato_regular"
                                     android:textColor="@color/textcolor"
                                     android:textFontWeight="1000"
                                     android:textSize="20sp" />
@@ -252,12 +261,14 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:text="Hourly"
+                        android:fontFamily="@font/lato_regular"
                         android:textColor="@color/textcolor"
                         android:textSize="16sp" />
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_regular"
                         android:textColor="@color/greycolor"
                         android:background="@android:color/transparent"
                         android:textSize="16sp"
@@ -266,6 +277,7 @@
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_regular"
                         android:textColor="@color/greycolor"
                         android:background="@android:color/transparent"
                         android:textSize="16sp"
