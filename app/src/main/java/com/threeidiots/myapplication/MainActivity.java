@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     private WeatherApiService apiService;
     private static final int NUM_PAGE = 3;
+    private Weather weathernow;
     private ViewPager2 viewpage;
     private FragmentStateAdapter pageradapter;
 
@@ -96,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
         txtFeellike = findViewById(R.id.txtfeelike);
         txtHum = findViewById(R.id.txtHumidity);
         txtPrecipation = findViewById(R.id.txtPrecitation);
+
+
+
+
         pageradapter = new ScreenSlideAdapter(this);
         viewpage.setAdapter(pageradapter);
         viewpage.setOffscreenPageLimit(3);
@@ -178,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(@NonNull WeatherList weatherList) {
                         Log.d("DEBUG1", "Success");
+                        weathernow = weatherList.getWeathers().get(0);
 
                         for (Weather weather: weatherList.getWeathers()) {
                             Log.d("SPACE", "----------------------------------------");
