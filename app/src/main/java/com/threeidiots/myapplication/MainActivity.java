@@ -114,8 +114,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                System.out.println("Position: " + position);
-                txtFeellike.setText(String.valueOf(position));
+                txtFeellike.setText(String.valueOf(weathernow.getWeatherMain().getFeelsLike()));
+                txtHum.setText(String.valueOf(weathernow.getWeatherMain().getHumidity()));
+                txtPrecipation.setText(String.valueOf(weathernow.getWeatherMain().get()));
+                txtFeellike.setText(String.valueOf(weathernow.getWeatherMain().getFeelsLike()));
             }
 
             @Override
@@ -147,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(@NonNull WeatherList weatherList) {
                                 Log.d("DEBUG1", "Success");
+                                weathernow = weatherList.getWeathers().get(0);
+                                System.out.println(weathernow.getDt() + "test nè");
 
                                 for (Weather weather: weatherList.getWeathers()) {
                                     Log.d("SPACE", "----------------------------------------");
