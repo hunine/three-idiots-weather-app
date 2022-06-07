@@ -104,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
         pageradapter = new ScreenSlideAdapter(this);
         viewpage.setAdapter(pageradapter);
         viewpage.setOffscreenPageLimit(3);
+
+
+
         viewpage.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -116,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 super.onPageSelected(position);
                 txtFeellike.setText(String.valueOf(weathernow.getWeatherMain().getFeelsLike()));
                 txtHum.setText(String.valueOf(weathernow.getWeatherMain().getHumidity()));
-                txtPrecipation.setText(String.valueOf(weathernow.getWeatherMain().get()));
-                txtFeellike.setText(String.valueOf(weathernow.getWeatherMain().getFeelsLike()));
+//                txtPrecipation.setText(String.valueOf(weathernow.getWeatherMain().get()));
+//                txtFeellike.setText(String.valueOf(weathernow.getWeatherMain().getFeelsLike()));
             }
 
             @Override
@@ -126,89 +129,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//      API
-        apiService = new WeatherApiService();
 
-//      Get current coordinates
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        settingsClient = LocationServices.getSettingsClient(this);
-
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(@NonNull LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-                currentLocation = locationResult.getLastLocation();
-
-                latitude = currentLocation.getLatitude();
-                longitude = currentLocation.getLongitude();
-
-                apiService.getWeatherList(latitude, longitude)
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(new DisposableSingleObserver<WeatherList>() {
-                            @Override
-                            public void onSuccess(@NonNull WeatherList weatherList) {
-                                Log.d("DEBUG1", "Success");
-                                weathernow = weatherList.getWeathers().get(0);
-                                System.out.println(weathernow.getDt() + "test nè");
-
-                                for (Weather weather: weatherList.getWeathers()) {
-                                    Log.d("SPACE", "----------------------------------------");
-                                    Log.d("Datetime Forecasted", weather.getDateTimeForecasted());
-                                    Log.d("DT", Integer.toString(weather.getDt()));
-                                    Log.d("Temperature", Double.toString(weather.getWeatherMain().getTemperature()));
-                                    Log.d("Feels like", Double.toString(weather.getWeatherMain().getFeelsLike()));
-                                    Log.d("Humidity", Integer.toString(weather.getWeatherMain().getHumidity()));
-                                    Log.d("Weather name", weather.getWeatherInfoList().get(0).getName());
-                                    Log.d("Description", weather.getWeatherInfoList().get(0).getDescription());
-                                    Log.d("Wind speed", Double.toString(weather.getWind().getSpeed()));
-
-                                }
-                                Log.d("City", weatherList.getLocation().getCity());
-                                Log.d("Country", weatherList.getLocation().getCountry());
-                            }
-
-                            @Override
-                            public void onError(@NonNull Throwable e) {
-                                Log.d("DEBUG1", "Fail " + e.getMessage());
-                            }
-                        });
-
-                Log.d("Latitude", Double.toString(latitude));
-                Log.d("longitude", Double.toString(longitude));
-            }
-        };
-
-        locationRequest = LocationRequest.create()
-                .setInterval(UPDATE_INTERVAL_IN_MILLISECONDS)
-                .setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS)
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
-        builder.addLocationRequest(locationRequest);
-        locationSettingsRequest = builder.build();
-
-        Dexter.withActivity(this)
-                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                .withListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted(PermissionGrantedResponse response) {
-                        requestingLocationUpdates = true;
-                        startLocationUpdates();
-                    }
-
-                    @Override
-                    public void onPermissionDenied(PermissionDeniedResponse response) {
-                        if (response.isPermanentlyDenied()) {
-                            openSettings();
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
 
 //      API
 //        apiService = new WeatherApiService();
@@ -272,72 +193,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void openSettings() {
-        Intent intent = new Intent();
-        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null);
-        intent.setData(uri);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
 
-    private void startLocationUpdates() {
-        settingsClient.checkLocationSettings(locationSettingsRequest)
-                .addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
-                    @SuppressLint("MissingPermission")
-                    @Override
-                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
-                    }
-                })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        int statusCode = ((ApiException) e).getStatusCode();
-                        switch (statusCode) {
-                            case LocationSettingsStatusCodes
-                                    .RESOLUTION_REQUIRED:
-                                Log.i(TAG, "Location settings are not satisfied. Attemping to upgrade location settings");
-
-                                try {
-                                    ResolvableApiException rae = (ResolvableApiException) e;
-                                    rae.startResolutionForResult(MainActivity.this, REQUEST_CHECK_SETTING);
-                                } catch (IntentSender.SendIntentException sie) {
-                                    Log.i(TAG, "PendingIntent unable to execute request");
-                                }
-                                break;
-                            case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                                String errorMessage = "Location settings are inadequate, and cannot be fixed here. Fix in settings";
-                                Log.i(TAG, errorMessage);
-
-                                Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    private void stopLocationUpdates() {
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback).addOnCompleteListener(this, task -> Log.d(TAG, "Location updates stopped!"));
-    }
-
-    private boolean checkPermission() {
-        int permissionState = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-        return permissionState == PackageManager.PERMISSION_GRANTED;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (requestingLocationUpdates && checkPermission()) {
-            startLocationUpdates();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (requestingLocationUpdates) {
-            stopLocationUpdates();
-        }
-    }
 }
