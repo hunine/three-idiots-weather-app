@@ -61,7 +61,16 @@
                 <ImageButton
                     android:layout_width="30dp"
                     android:src="@drawable/location"
+                    android:id="@+id/button_location"
                     android:background="@drawable/add_button"
+                    android:scaleType="fitXY"
+                    android:layout_height="30dp"/>
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:src="@drawable/doubts_button"
+                    android:id="@+id/button_question"
+                    android:background="@drawable/add_button"
+                    android:layout_marginLeft="12dp"
                     android:scaleType="fitXY"
                     android:layout_height="30dp"/>
             </LinearLayout>
@@ -78,7 +87,7 @@
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="80dp"
-                    android:src="@drawable/weather"
+                    android:src="@drawable/icon_01d"
                     android:id="@+id/weathericon"
                     android:layout_height="80dp"/>
                 <TextView
