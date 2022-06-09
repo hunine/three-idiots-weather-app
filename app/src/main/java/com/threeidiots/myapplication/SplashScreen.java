@@ -22,8 +22,11 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowInsets;
+import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -76,16 +79,20 @@ public class SplashScreen extends AppCompatActivity {
     double latitude = 0.0;
     double longitude = 0.0;
 
+    private ImageView imgview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
+//        View decorView = getWindow().getDecorView();
+//        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+//        decorView.setSystemUiVisibility(uiOptions);
         getSupportActionBar().hide();
-        System.out.println("Oncreate");
 
+
+        imgview = findViewById(R.id.imageview);
+        Glide.with(this).load(getDrawable(R.drawable.cat2o_agadigadka9qfa)).into(imgview);
 
         //      API
         apiService = new WeatherApiService();
@@ -126,14 +133,17 @@ public class SplashScreen extends AppCompatActivity {
                                     Log.d("Icon", weather.getWeatherInfoList().get(0).getIcon());
 
                                 }
-                                Log.d("City", weatherList.getLocation().getCity());
-                                Log.d("Country", weatherList.getLocation().getCountry());
+//                                System.out.println("Donetest");
+//                                Log.d("City", weatherList.getLocation().getCity());
+//                                Log.d("Country", weatherList.getLocation().getCountry());
+                                startActivity(new Intent(SplashScreen.this, MainActivity.class));
 
                             }
 
                             @Override
                             public void onError(@NonNull Throwable e) {
                                 Log.d("DEBUG1", "Fail " + e.getMessage());
+
                             }
 
 

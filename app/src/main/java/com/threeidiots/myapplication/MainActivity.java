@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                txtFeellike.setText(String.valueOf(weathernow.getWeatherMain().getFeelsLike()));
-                txtHum.setText(String.valueOf(weathernow.getWeatherMain().getHumidity()));
+//                txtFeellike.setText(String.valueOf(weathernow.getWeatherMain().getFeelsLike()));
+//                txtHum.setText(String.valueOf(weathernow.getWeatherMain().getHumidity()));
 //                txtPrecipation.setText(String.valueOf(weathernow.getWeatherMain().get()));
 //                txtFeellike.setText(String.valueOf(weathernow.getWeatherMain().getFeelsLike()));
             }
