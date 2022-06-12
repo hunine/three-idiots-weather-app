@@ -20,6 +20,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:text="Da Nang"
+                android:id="@+id/txtCity"
                 android:fontFamily="@font/lato_bold"
                 android:textColor="@color/textcolor"
                 android:paddingBottom="6dp"
@@ -111,6 +112,7 @@
                     android:paddingBottom="8dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="Weather now"
+                    android:id="@+id/txt_time"
                     android:textColor="@color/textcolor"
                     android:textFontWeight="600"
                     android:textSize="26sp" />
@@ -328,6 +330,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:text="Hourly"
+                        android:id="@+id/btn_hourly"
                         android:fontFamily="@font/lato_regular"
                         android:textColor="@color/textcolor"
                         android:textSize="16sp" />
@@ -337,6 +340,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:textColor="@color/greycolor"
+                        android:id="@+id/btn_daily"
                         android:background="@android:color/transparent"
                         android:textSize="16sp"
                         android:text="Dayly" />
@@ -346,6 +350,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:textColor="@color/greycolor"
+                        android:id="@+id/btn_weekly"
                         android:background="@android:color/transparent"
                         android:textSize="16sp"
                         android:text="Weekly" />

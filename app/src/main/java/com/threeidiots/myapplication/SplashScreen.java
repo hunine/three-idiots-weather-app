@@ -63,8 +63,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 public class SplashScreen extends AppCompatActivity {
 
-    private ActivitySplashScreenBinding binding;
+//    private ActivitySplashScreenBinding binding;
     private Weather weathernow;
+    private Weather weatherdaily;
+    private Weather weatherweekly;
+
     private WeatherApiService apiService;
     private static final int REQUEST_CHECK_SETTING = 100;
     private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
@@ -116,7 +119,8 @@ public class SplashScreen extends AppCompatActivity {
                             public void onSuccess(@NonNull WeatherList weatherList) {
                                 Log.d("DEBUG1", "Success");
                                 weathernow = weatherList.getWeathers().get(0);
-                                System.out.println(weathernow.getDt() + "test nè");
+                                weatherdaily = weatherList.getWeathers().get(7);
+                                weatherweekly = weatherList.getWeathers().get(32);
 
                                 for (Weather weather: weatherList.getWeathers()) {
                                     Log.d("SPACE", "----------------------------------------");
@@ -132,15 +136,15 @@ public class SplashScreen extends AppCompatActivity {
                                     Log.d("Icon", weather.getWeatherInfoList().get(0).getIcon());
 
                                 }
-//                                System.out.println("Donetest");
-//                                Log.d("City", weatherList.getLocation().getCity());
-//                                Log.d("Country", weatherList.getLocation().getCountry());
-//                                String value="Hello world";
                                 Gson gson = new Gson();
-                                String myson = gson.toJson(weathernow);
+                                String weather_now = gson.toJson(weathernow);
+                                String weather_daily = gson.toJson(weatherdaily);
+                                String weather_weekly = gson.toJson(weatherweekly);
 
                                 Intent i = new Intent(SplashScreen.this, MainActivity.class);
-                                i.putExtra("key",myson);
+                                i.putExtra("now",weather_now);
+                                i.putExtra("daily",weather_daily);
+                                i.putExtra("weekly",weather_weekly);
                                 startActivity(i);
 
                             }

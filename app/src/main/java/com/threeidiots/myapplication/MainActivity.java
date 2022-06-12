@@ -48,6 +48,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,9 +58,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private WeatherApiService apiService;
+
     private static final int NUM_PAGE = 3;
-    private Weather weathernow;
     private ViewPager2 viewpage;
     private FragmentStateAdapter pageradapter;
 
@@ -67,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtHum;
     private TextView txtFeellike;
     private TextView txtPrecipation;
+    private TextView txtTime;
+    private Button btnHourly;
+    private Button btnDaily;
+    private Button btnWeekly;
 
 
     @Override
@@ -74,7 +78,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Gson gson = new Gson();
-        Weather weathernow = gson.fromJson(getIntent().getStringExtra("key"), Weather.class);
+        Weather weathernow = gson.fromJson(getIntent().getStringExtra("now"), Weather.class);
+        Weather weatherdaily = gson.fromJson(getIntent().getStringExtra("daily"), Weather.class);
+        Weather weatherweekly = gson.fromJson(getIntent().getStringExtra("weekly"), Weather.class);
+        System.out.println(String.valueOf(weatherdaily.getWeatherMain().getFeelsLike()));
 
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -87,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
         txtFeellike = findViewById(R.id.txtfeelike);
         txtHum = findViewById(R.id.txtHumidity);
         txtPrecipation = findViewById(R.id.txtPrecitation);
+        txtTime = findViewById(R.id.txt_time);
+
+        btnHourly = findViewById(R.id.btn_hourly);
+        btnDaily = findViewById(R.id.btn_daily);
+        btnWeekly = findViewById(R.id.btn_weekly);
 
 
 
@@ -94,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
         pageradapter = new ScreenSlideAdapter(this);
         viewpage.setAdapter(pageradapter);
         viewpage.setOffscreenPageLimit(3);
-
-
 
 
 
@@ -109,11 +119,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-
-                txtFeellike.setText(String.valueOf(Math.round(weathernow.getWeatherMain().getFeelsLike())) + " °C");
-                txtHum.setText(String.valueOf(weathernow.getWeatherMain().getHumidity()) + " %");
-                txtWindy.setText(String.valueOf(Math.round(weathernow.getWind().getSpeed())) + " km/h");
-                txtPrecipation.setText(String.valueOf(weathernow.getWeatherMain().getPressure()) + " MPa");
+                SetText(weatherdaily);
             }
 
             @Override
@@ -122,6 +128,50 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        btnHourly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SetText(weathernow);
+                txtTime.setText("Weather now");
+                ResetButtonColor();
+                btnHourly.setTextColor(getResources().getColor(R.color.textcolor));
+            }
+        });
+
+        btnDaily.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SetText(weatherdaily);
+                txtTime.setText("Weather tommorow");
+                ResetButtonColor();
+                btnDaily.setTextColor(getResources().getColor(R.color.textcolor));
+            }
+        });
+
+        btnWeekly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SetText(weatherweekly);
+                txtTime.setText("Weather this week");
+                ResetButtonColor();
+                btnWeekly.setTextColor(getResources().getColor(R.color.textcolor));
+            }
+        });
+
+    }
+
+    private void SetText(Weather weather){
+        txtFeellike.setText(String.valueOf(Math.round(weather.getWeatherMain().getFeelsLike())) + " °C");
+        txtHum.setText(String.valueOf(weather.getWeatherMain().getHumidity()) + " %");
+        txtWindy.setText(String.valueOf(Math.round(weather.getWind().getSpeed())) + " km/h");
+        txtPrecipation.setText(String.valueOf(weather.getWeatherMain().getPressure()) + " MPa");
+    }
+
+    private void ResetButtonColor(){
+        btnHourly.setTextColor(getResources().getColor(R.color.greytextcolor));
+        btnDaily.setTextColor(getResources().getColor(R.color.greytextcolor));
+        btnWeekly.setTextColor(getResources().getColor(R.color.greytextcolor));
     }
 
     private class ScreenSlideAdapter extends FragmentStateAdapter {
@@ -130,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
 
             Gson gson2 = new Gson();
-            Weather weathernow2 = gson2.fromJson(getIntent().getStringExtra("key"), Weather.class);
+            Weather weathernow2 = gson2.fromJson(getIntent().getStringExtra("now"), Weather.class);
 
             switch (position){
                 case 0:

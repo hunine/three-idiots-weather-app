@@ -31,7 +31,7 @@ public class ViewpagerScreen extends Fragment {
         video_id = _videoId;
         temp = _temp;
         image_id = getResId("icon_" + _imageID, R.drawable.class);
-        description = "Today is a " + _description.substring(0, 1).toUpperCase() + _description.substring(1) + " day";
+        description = "This is a " + _description.substring(0, 1).toUpperCase() + _description.substring(1) + " day";
         weather_name = _name;
     }
 
