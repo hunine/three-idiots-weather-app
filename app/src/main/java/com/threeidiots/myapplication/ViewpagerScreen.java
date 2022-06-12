@@ -18,14 +18,32 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.lang.reflect.Field;
+
 public class ViewpagerScreen extends Fragment {
 
     private ImageView WeatherIcon;
     Context context;
+    Double temp;
 
-    public ViewpagerScreen(String str, String packagename, int id){
+    public ViewpagerScreen(Double _temp, String packagename, int _videoId, String _imageID, String _description, String _name){
         getPackageName = packagename;
-        video_id = id;
+        video_id = _videoId;
+        temp = _temp;
+        image_id = getResId("icon_" + _imageID, R.drawable.class);
+        description = "Today is a " + _description.substring(0, 1).toUpperCase() + _description.substring(1) + " day";
+        weather_name = _name;
+    }
+
+    public static int getResId(String resName, Class<?> c) {
+
+        try {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
 
@@ -36,12 +54,12 @@ public class ViewpagerScreen extends Fragment {
         Animation anim = AnimationUtils.loadAnimation(context, R.anim.bounce);
         Animation anim2 = AnimationUtils.loadAnimation(context, R.anim.bounce2);
         WeatherIcon.startAnimation(anim);
-        txtdescription.startAnimation(anim2);
+        txtweathername.startAnimation(anim2);
         startCountAnimation();
 
     }
     private void startCountAnimation() {
-        ValueAnimator animator = ValueAnimator.ofInt(15, -10);
+        ValueAnimator animator = ValueAnimator.ofInt(15, temp.intValue());
         animator.setDuration(1000);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -52,9 +70,13 @@ public class ViewpagerScreen extends Fragment {
     }
 
     private int video_id;
-    private TextView txt;
+    private int image_id;
+    private String weather_name;
+    private String description;
+
     private TextView txtdescription;
     private String getPackageName;
+    private TextView txtweathername;
     private View inflatedview = null;
     private VideoView videoView;
     private TextView txtTemparature;
@@ -70,6 +92,13 @@ public class ViewpagerScreen extends Fragment {
         txtdescription = inflatedview.findViewById(R.id.txtdescription);
         context = inflatedview.getContext();
         txtTemparature = inflatedview.findViewById(R.id.txttemparature);
+        txtweathername = inflatedview.findViewById(R.id.txtName);
+
+
+        WeatherIcon.setImageResource(image_id);
+        txtdescription.setText(description);
+        txtweathername.setText(weather_name);
+
 
         String path = "android.resource://" + getPackageName + "/" + video_id;
         videoView.setVideoURI(Uri.parse(path));

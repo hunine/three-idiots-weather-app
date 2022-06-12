@@ -27,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:text="A few clouds"
                     android:textSize="20sp"
-                    android:id="@+id/txtdescription"
+                    android:id="@+id/txtName"
                     android:fontFamily="@font/lato_regular"
                     android:textColor="@color/greytextcolor"
                     android:layout_height="wrap_content"/>
@@ -53,17 +53,33 @@
 <!--                -->
 <!--                android:layout_height="wrap_content"/>-->
 <!--        </LinearLayout>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:fontFamily="@font/lato_regular"
+                android:textColor="@color/greytextcolor"
+                android:id="@+id/txtdescription"
+                />
+        </LinearLayout>
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="350dp" >
-            <VideoView android:id="@+id/videoview"
+
+            <VideoView
+                android:id="@+id/videoview"
                 android:layout_width="fill_parent"
-                android:layout_alignParentRight="true"
+                android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_height="fill_parent">
-            </VideoView>
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"></VideoView>
         </RelativeLayout>
 
     </LinearLayout>

@@ -40,6 +40,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
 import com.karumi.dexter.BuildConfig;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -85,9 +86,6 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-//        View decorView = getWindow().getDecorView();
-//        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-//        decorView.setSystemUiVisibility(uiOptions);
         getSupportActionBar().hide();
 
 
@@ -126,6 +124,7 @@ public class SplashScreen extends AppCompatActivity {
                                     Log.d("DT", Integer.toString(weather.getDt()));
                                     Log.d("Temperature", Double.toString(weather.getWeatherMain().getTemperature()));
                                     Log.d("Feels like", Double.toString(weather.getWeatherMain().getFeelsLike()));
+                                    Log.d("Pressure", Double.toString(weather.getWeatherMain().getPressure()));
                                     Log.d("Humidity", Integer.toString(weather.getWeatherMain().getHumidity()));
                                     Log.d("Weather name", weather.getWeatherInfoList().get(0).getName());
                                     Log.d("Description", weather.getWeatherInfoList().get(0).getDescription());
@@ -136,7 +135,13 @@ public class SplashScreen extends AppCompatActivity {
 //                                System.out.println("Donetest");
 //                                Log.d("City", weatherList.getLocation().getCity());
 //                                Log.d("Country", weatherList.getLocation().getCountry());
-                                startActivity(new Intent(SplashScreen.this, MainActivity.class));
+//                                String value="Hello world";
+                                Gson gson = new Gson();
+                                String myson = gson.toJson(weathernow);
+
+                                Intent i = new Intent(SplashScreen.this, MainActivity.class);
+                                i.putExtra("key",myson);
+                                startActivity(i);
 
                             }
 

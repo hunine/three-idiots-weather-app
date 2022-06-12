@@ -32,6 +32,7 @@ import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
 import com.karumi.dexter.BuildConfig;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -67,28 +68,17 @@ public class MainActivity extends AppCompatActivity {
     private TextView txtFeellike;
     private TextView txtPrecipation;
 
-    private static final int REQUEST_CHECK_SETTING = 100;
-    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 10000;
-    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 1000;
-    private static final String TAG = MainActivity.class.getSimpleName();
-    private FusedLocationProviderClient fusedLocationProviderClient;
-    private SettingsClient settingsClient;
-    private LocationRequest locationRequest;
-    private LocationSettingsRequest locationSettingsRequest;
-    private LocationCallback locationCallback;
-    private Location currentLocation;
-    private boolean requestingLocationUpdates = false;
-    double latitude = 0.0;
-    double longitude = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      
+
+        Gson gson = new Gson();
+        Weather weathernow = gson.fromJson(getIntent().getStringExtra("key"), Weather.class);
+
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
-//      getActionBar().hide();
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
       
@@ -107,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         viewpage.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -117,10 +109,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-//                txtFeellike.setText(String.valueOf(weathernow.getWeatherMain().getFeelsLike()));
-//                txtHum.setText(String.valueOf(weathernow.getWeatherMain().getHumidity()));
-//                txtPrecipation.setText(String.valueOf(weathernow.getWeatherMain().get()));
-//                txtFeellike.setText(String.valueOf(weathernow.getWeatherMain().getFeelsLike()));
+
+                txtFeellike.setText(String.valueOf(Math.round(weathernow.getWeatherMain().getFeelsLike())) + " °C");
+                txtHum.setText(String.valueOf(weathernow.getWeatherMain().getHumidity()) + " %");
+                txtWindy.setText(String.valueOf(Math.round(weathernow.getWind().getSpeed())) + " km/h");
+                txtPrecipation.setText(String.valueOf(weathernow.getWeatherMain().getPressure()) + " MPa");
             }
 
             @Override
@@ -129,55 +122,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-//      API
-//        apiService = new WeatherApiService();
-//
-//        apiService.getWeatherList()
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeWith(new DisposableSingleObserver<WeatherList>() {
-//                    @Override
-//                    public void onSuccess(@NonNull WeatherList weatherList) {
-//                        Log.d("DEBUG1", "Success");
-//                        weathernow = weatherList.getWeathers().get(0);
-//
-//                        for (Weather weather: weatherList.getWeathers()) {
-//                            Log.d("SPACE", "----------------------------------------");
-//                            Log.d("Datetime Forecasted", weather.getDateTimeForecasted());
-//                            Log.d("DT", Integer.toString(weather.getDt()));
-//                            Log.d("Temperature", Double.toString(weather.getWeatherMain().getTemperature()));
-//                            Log.d("Feels like", Double.toString(weather.getWeatherMain().getFeelsLike()));
-//                            Log.d("Humidity", Integer.toString(weather.getWeatherMain().getHumidity()));
-//                            Log.d("Weather name", weather.getWeatherInfoList().get(0).getName());
-//                            Log.d("Description", weather.getWeatherInfoList().get(0).getDescription());
-//                            Log.d("Wind speed", Double.toString(weather.getWind().getSpeed()));
-//
-//                        }
-//                        Log.d("City", weatherList.getLocation().getCity());
-//                        Log.d("Country", weatherList.getLocation().getCountry());
-//                    }
-//
-//                    @Override
-//                    public void onError(@NonNull Throwable e) {
-//                            Log.d("DEBUG1", "Fail " + e.getMessage());
-//                    }
-//                });
     }
 
     private class ScreenSlideAdapter extends FragmentStateAdapter {
         @NonNull
         @Override
         public Fragment createFragment(int position) {
+
+            Gson gson2 = new Gson();
+            Weather weathernow2 = gson2.fromJson(getIntent().getStringExtra("key"), Weather.class);
+
             switch (position){
                 case 0:
-                    return new ViewpagerScreen("First Screen", getPackageName(), R.raw.video1);
+                    return new ViewpagerScreen(weathernow2.getWeatherMain().getTemperature(), getPackageName(), R.raw.video1, weathernow2.getWeatherInfoList().get(0).getIcon(), weathernow2.getWeatherInfoList().get(0).getDescription(), weathernow2.getWeatherInfoList().get(0).getName());
 
                 case 1:
-                    return new ViewpagerScreen("Second Screen", getPackageName(), R.raw.video2);
+                    return new ViewpagerScreen(weathernow2.getWeatherMain().getTemperature(), getPackageName(), R.raw.video2, weathernow2.getWeatherInfoList().get(0).getIcon(),weathernow2.getWeatherInfoList().get(0).getDescription(), weathernow2.getWeatherInfoList().get(0).getName());
                 case 2:
-                    return new ViewpagerScreen("Third Screen", getPackageName(), R.raw.video3);
+                    return new ViewpagerScreen(weathernow2.getWeatherMain().getTemperature(), getPackageName(), R.raw.video3, weathernow2.getWeatherInfoList().get(0).getIcon(), weathernow2.getWeatherInfoList().get(0).getDescription(), weathernow2.getWeatherInfoList().get(0).getName());
                 default:
                     return null;
             }

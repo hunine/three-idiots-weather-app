@@ -12,10 +12,22 @@ public class WeatherMain {
     @SerializedName("humidity")
     private int humidity;
 
-    public WeatherMain(double temperature, double feelsLike, int humidity) {
+    public int getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(int pressure) {
+        this.pressure = pressure;
+    }
+
+    @SerializedName("pressure")
+    private int pressure;
+
+    public WeatherMain(double temperature, double feelsLike, int humidity, int pressure) {
         this.temperature = temperature;
         this.feelsLike = feelsLike;
         this.humidity = humidity;
+        this.pressure = pressure;
     }
 
     public double getTemperature() {
