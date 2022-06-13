@@ -6,6 +6,74 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingVertical="20dp"
+        android:background="@color/backgroundcolor"
+        android:paddingLeft="28dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Da Nang"
+                android:id="@+id/txtCity"
+                android:fontFamily="@font/lato_bold"
+                android:textColor="@color/textcolor"
+                android:paddingBottom="6dp"
+                android:textSize="24dp"
+                android:layout_height="wrap_content"/>
+            <!--             <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:src="@drawable/location"
+                                android:paddingRight="8dp"
+                                android:layout_height="30dp"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="Da Nang"
+                                android:textColor="@color/textcolor"
+                                android:textSize="24dp"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout> -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Today, 19th May 2022"
+                android:textColor="@color/textcolor"
+                android:fontFamily="@font/lato_regular"
+                android:textSize="16dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingTop="8dp"
+            android:paddingRight="30dp"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:layout_width="30dp"
+                android:src="@drawable/location"
+                android:id="@+id/button_location"
+                android:background="@drawable/add_button"
+                android:scaleType="fitXY"
+                android:layout_height="30dp"/>
+            <ImageButton
+                android:layout_width="30dp"
+                android:src="@drawable/doubts_button"
+                android:id="@+id/button_question"
+                android:background="@drawable/add_button"
+                android:layout_marginLeft="12dp"
+                android:scaleType="fitXY"
+                android:layout_height="30dp"/>
+        </LinearLayout>
+    </LinearLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:layout_width="fill_parent"
@@ -44,6 +112,7 @@
                     android:paddingBottom="8dp"
                     android:fontFamily="@font/lato_bold"
                     android:text="Weather now"
+                    android:id="@+id/txt_time"
                     android:textColor="@color/textcolor"
                     android:textFontWeight="600"
                     android:textSize="26sp" />
@@ -86,14 +155,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Precipitation"
+                                    android:text="Pressure"
                                     android:fontFamily="@font/lato_regular"
                                     android:textColor="@color/greycolor"
                                     android:textFontWeight="400"
                                     android:textSize="16sp" />
 
                                 <TextView
-                                    android:id="@+id/txtWindy"
+                                    android:id="@+id/txtPrecitation"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="20%"
@@ -129,14 +198,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Wind"
+                                    android:text="Windy"
                                     android:fontFamily="@font/lato_regular"
                                     android:textColor="@color/greycolor"
                                     android:textFontWeight="400"
                                     android:textSize="16sp" />
 
                                 <TextView
-                                    android:id="@+id/txtPrecitation"
+                                    android:id="@+id/txtWindy"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="25 km/h"
@@ -261,6 +330,7 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:text="Hourly"
+                        android:id="@+id/btn_hourly"
                         android:fontFamily="@font/lato_regular"
                         android:textColor="@color/textcolor"
                         android:textSize="16sp" />
@@ -270,6 +340,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:textColor="@color/greycolor"
+                        android:id="@+id/btn_daily"
                         android:background="@android:color/transparent"
                         android:textSize="16sp"
                         android:text="Dayly" />
@@ -279,6 +350,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato_regular"
                         android:textColor="@color/greycolor"
+                        android:id="@+id/btn_weekly"
                         android:background="@android:color/transparent"
                         android:textSize="16sp"
                         android:text="Weekly" />
