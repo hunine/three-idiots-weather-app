@@ -100,9 +100,6 @@ public class MainActivity extends AppCompatActivity {
         btnDaily = findViewById(R.id.btn_daily);
         btnWeekly = findViewById(R.id.btn_weekly);
 
-
-
-
         pageradapter = new ScreenSlideAdapter(this);
         viewpage.setAdapter(pageradapter);
         viewpage.setOffscreenPageLimit(3);
@@ -164,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
     private void SetText(Weather weather){
         txtFeellike.setText(String.valueOf(Math.round(weather.getWeatherMain().getFeelsLike())) + " °C");
         txtHum.setText(String.valueOf(weather.getWeatherMain().getHumidity()) + " %");
-        txtWindy.setText(String.valueOf(Math.round(weather.getWind().getSpeed())) + " km/h");
-        txtPrecipation.setText(String.valueOf(weather.getWeatherMain().getPressure()) + " MPa");
+        txtWindy.setText(String.valueOf(Math.round(weather.getWind().getSpeed()) * 3.6) + " km/h");
+        txtPrecipation.setText(String.valueOf(weather.getWeatherMain().getPressure()) + " hPa");
     }
 
     private void ResetButtonColor(){
@@ -185,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
             switch (position){
                 case 0:
                     return new ViewpagerScreen(weathernow2.getWeatherMain().getTemperature(), getPackageName(), R.raw.video1, weathernow2.getWeatherInfoList().get(0).getIcon(), weathernow2.getWeatherInfoList().get(0).getDescription(), weathernow2.getWeatherInfoList().get(0).getName());
-
                 case 1:
                     return new ViewpagerScreen(weathernow2.getWeatherMain().getTemperature(), getPackageName(), R.raw.video2, weathernow2.getWeatherInfoList().get(0).getIcon(),weathernow2.getWeatherInfoList().get(0).getDescription(), weathernow2.getWeatherInfoList().get(0).getName());
                 case 2:

@@ -23,4 +23,8 @@ public class WeatherApiService {
     public Single<WeatherList> getWeatherList(double latitude, double longitude) {
         return api.getWeatherList(latitude, longitude);
     }
+
+    public Single<WeatherList> getWeatherList(String city) {
+        return api.getWeatherList(city);
+    }
 }
