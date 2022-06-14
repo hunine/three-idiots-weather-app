@@ -41,7 +41,6 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-import com.threeidiots.myapplication.databinding.ActivitySplashScreenBinding;
 import com.threeidiots.myapplication.model.Weather;
 import com.threeidiots.myapplication.model.WeatherList;
 import com.threeidiots.myapplication.viewmodel.WeatherApiService;
@@ -55,10 +54,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * status bar and navigation/system bar) with user interaction.
  */
 public class SplashScreen extends AppCompatActivity {
-
-    private Weather weathernow;
-    private Weather weatherdaily;
-    private Weather weatherweekly;
 
     private WeatherApiService apiService;
     private static final int REQUEST_CHECK_SETTING = 100;
@@ -117,29 +112,8 @@ public class SplashScreen extends AppCompatActivity {
                         .subscribeWith(new DisposableSingleObserver<WeatherList>() {
                             @Override
                             public void onSuccess(@NonNull WeatherList weatherList) {
-                                Log.d("DEBUG1", "Success");
-//                                weathernow = weatherList.getWeathers().get(0);
-//                                weatherdaily = weatherList.getWeathers().get(7);
-//                                weatherweekly = weatherList.getWeathers().get(32);
                                 list2 = weatherList;
 
-                                for (Weather weather: weatherList.getWeathers()) {
-                                    Log.d("SPACE", "----------------------------------------");
-                                    Log.d("Fuck", weather.getDateTimeForecasted());
-                                    Log.d("Fuck", Integer.toString(weather.getDt()));
-                                    Log.d("Fuck", Double.toString(weather.getWeatherMain().getTemperature()));
-                                    Log.d("Fuck", Double.toString(weather.getWeatherMain().getFeelsLike()));
-                                }
-//                                Gson gson = new Gson();
-//                                String weather_now = gson.toJson(weathernow);
-//                                String weather_daily = gson.toJson(weatherdaily);
-//                                String weather_weekly = gson.toJson(weatherweekly);
-//
-//                                Intent i = new Intent(SplashScreen.this, MainActivity.class);
-//                                i.putExtra("now",weather_now);
-//                                i.putExtra("daily",weather_daily);
-//                                i.putExtra("weekly",weather_weekly);
-//                                startActivity(i);
                                 openNextActivity();
 
                             }
@@ -157,28 +131,8 @@ public class SplashScreen extends AppCompatActivity {
                             @Override
                             public void onSuccess(@NonNull WeatherList weatherList) {
                                 Log.d("DEBUG1", "Success");
-//                                weathernow = weatherList.getWeathers().get(0);
-//                                weatherdaily = weatherList.getWeathers().get(7);
-//                                weatherweekly = weatherList.getWeathers().get(32);
                                 list3 = weatherList;
 
-                                for (Weather weather: weatherList.getWeathers()) {
-                                    Log.d("SPACE", "----------------------------------------");
-                                    Log.d("Fuck", weather.getDateTimeForecasted());
-                                    Log.d("Fuck", Integer.toString(weather.getDt()));
-                                    Log.d("Fuck", Double.toString(weather.getWeatherMain().getTemperature()));
-                                    Log.d("Fuck", Double.toString(weather.getWeatherMain().getFeelsLike()));
-                                }
-                                Gson gson = new Gson();
-//                                String weather_now = gson.toJson(weathernow);
-//                                String weather_daily = gson.toJson(weatherdaily);
-//                                String weather_weekly = gson.toJson(weatherweekly);
-
-//                                Intent i = new Intent(SplashScreen.this, MainActivity.class);
-//                                i.putExtra("now",weather_now);
-//                                i.putExtra("daily",weather_daily);
-//                                i.putExtra("weekly",weather_weekly);
-//                                startActivity(i);
                                 openNextActivity();
 
                             }
@@ -200,9 +154,6 @@ public class SplashScreen extends AppCompatActivity {
                             public void onSuccess(@NonNull WeatherList weatherList) {
                                 Log.d("DEBUG1", "Success");
                                 list1 = weatherList;
-//                                weathernow = weatherList.getWeathers().get(0);
-//                                weatherdaily = weatherList.getWeathers().get(7);
-//                                weatherweekly = weatherList.getWeathers().get(32);
 
                                 for (Weather weather: weatherList.getWeathers()) {
                                     Log.d("SPACE", "----------------------------------------");

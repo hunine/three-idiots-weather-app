@@ -51,22 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         Gson gson = new Gson();
         WeatherList weather1 = gson.fromJson(getIntent().getStringExtra("city1"), WeatherList.class);
-//        Weather weathernow1 = weather1.getWeathers().get(0);
         Weather weatherdaily1 = weather1.getWeathers().get(7);
-//        Weather weatherweekly1 = weather1.getWeathers().get(32);
-//        System.out.println(weather1.getLocation().getCity().toString());
-
-
         WeatherList weather2 = gson.fromJson(getIntent().getStringExtra("city2"), WeatherList.class);
-//        Weather weathernow2 = weather2.getWeathers().get(0);
-//        Weather weatherdaily2 = weather2.getWeathers().get(7);
-//        Weather weatherweekly2 = weather2.getWeathers().get(32);
-
 
         WeatherList weather3 = gson.fromJson(getIntent().getStringExtra("city3"), WeatherList.class);
-//        Weather weathernow3 = weather3.getWeathers().get(0);
-//        Weather weatherdaily3 = weather3.getWeathers().get(7);
-//        Weather weatherweekly3 = weather3.getWeathers().get(32);
 
 //        Weather weatherweekly = gson.fromJson(getIntent().getStringExtra("weekly"), Weather.class);
         System.out.println(String.valueOf(weatherdaily1.getWeatherMain().getFeelsLike()));
@@ -243,10 +231,6 @@ public class MainActivity extends AppCompatActivity {
 
         int pressure = (int) weather.getWeatherMain().getPressure();
         startCountAnimationPre(txtPrecipation, pre_pressure, pressure);
-//        txtFeellike.setText(String.valueOf(Math.round(weather.getWeatherMain().getFeelsLike())) + " °C");
-//        txtHum.setText(String.valueOf(weather.getWeatherMain().getHumidity()) + " %");
-//        txtWindy.setText(String.valueOf(Math.round(weather.getWind().getSpeed() * 3.6)) + " km/h");
-//        txtPrecipation.setText(String.valueOf(weather.getWeatherMain().getPressure()) + " hPa");
     }
 
     private void startCountAnimationFell(TextView txtview, int first_temp, int second_temp) {
