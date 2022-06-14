@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -13,16 +12,10 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowInsets;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -48,7 +41,6 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-import com.threeidiots.myapplication.databinding.ActivitySplashScreenBinding;
 import com.threeidiots.myapplication.model.Weather;
 import com.threeidiots.myapplication.model.WeatherList;
 import com.threeidiots.myapplication.viewmodel.WeatherApiService;
@@ -62,11 +54,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * status bar and navigation/system bar) with user interaction.
  */
 public class SplashScreen extends AppCompatActivity {
-
-//    private ActivitySplashScreenBinding binding;
-    private Weather weathernow;
-    private Weather weatherdaily;
-    private Weather weatherweekly;
 
     private WeatherApiService apiService;
     private static final int REQUEST_CHECK_SETTING = 100;
@@ -82,6 +69,10 @@ public class SplashScreen extends AppCompatActivity {
     private boolean requestingLocationUpdates = false;
     double latitude = 0.0;
     double longitude = 0.0;
+    private int count =0;
+    private WeatherList list1;
+    private WeatherList list2;
+    private WeatherList list3;
 
     private ImageView imgview;
 
@@ -111,6 +102,50 @@ public class SplashScreen extends AppCompatActivity {
                 latitude = currentLocation.getLatitude();
                 longitude = currentLocation.getLongitude();
 
+
+                Log.d("Latitude", Double.toString(latitude));
+                Log.d("longitude", Double.toString(longitude));
+
+                apiService.getWeatherList("Hanoi")
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<WeatherList>() {
+                            @Override
+                            public void onSuccess(@NonNull WeatherList weatherList) {
+                                list2 = weatherList;
+
+                                openNextActivity();
+
+                            }
+
+                            @Override
+                            public void onError(@NonNull Throwable e) {
+                                Log.d("DEBUG1", "Fail " + e.getMessage());
+
+                            }
+                        });
+                apiService.getWeatherList("Dalat")
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver<WeatherList>() {
+                            @Override
+                            public void onSuccess(@NonNull WeatherList weatherList) {
+                                Log.d("DEBUG1", "Success");
+                                list3 = weatherList;
+
+                                openNextActivity();
+
+                            }
+
+                            @Override
+                            public void onError(@NonNull Throwable e) {
+                                Log.d("DEBUG1", "Fail " + e.getMessage());
+
+                            }
+                        });
+
+
+
                 apiService.getWeatherList(latitude, longitude)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -118,9 +153,7 @@ public class SplashScreen extends AppCompatActivity {
                             @Override
                             public void onSuccess(@NonNull WeatherList weatherList) {
                                 Log.d("DEBUG1", "Success");
-                                weathernow = weatherList.getWeathers().get(0);
-                                weatherdaily = weatherList.getWeathers().get(7);
-                                weatherweekly = weatherList.getWeathers().get(32);
+                                list1 = weatherList;
 
                                 for (Weather weather: weatherList.getWeathers()) {
                                     Log.d("SPACE", "----------------------------------------");
@@ -136,17 +169,8 @@ public class SplashScreen extends AppCompatActivity {
                                     Log.d("Icon", weather.getWeatherInfoList().get(0).getIcon());
 
                                 }
-                                Gson gson = new Gson();
-                                String weather_now = gson.toJson(weathernow);
-                                String weather_daily = gson.toJson(weatherdaily);
-                                String weather_weekly = gson.toJson(weatherweekly);
 
-                                Intent i = new Intent(SplashScreen.this, MainActivity.class);
-                                i.putExtra("now",weather_now);
-                                i.putExtra("daily",weather_daily);
-                                i.putExtra("weekly",weather_weekly);
-                                startActivity(i);
-
+                                openNextActivity();
                             }
 
                             @Override
@@ -155,47 +179,6 @@ public class SplashScreen extends AppCompatActivity {
 
                             }
                         });
-
-                Log.d("Latitude", Double.toString(latitude));
-                Log.d("longitude", Double.toString(longitude));
-
-//                apiService.getWeatherList("Danang")
-//                        .subscribeOn(Schedulers.newThread())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribeWith(new DisposableSingleObserver<WeatherList>() {
-//                            @Override
-//                            public void onSuccess(@NonNull WeatherList weatherList) {
-//                                Log.d("DEBUG1", "Success");
-//                                weathernow = weatherList.getWeathers().get(0);
-//                                weatherdaily = weatherList.getWeathers().get(7);
-//                                weatherweekly = weatherList.getWeathers().get(32);
-//
-//                                for (Weather weather: weatherList.getWeathers()) {
-//                                    Log.d("SPACE", "----------------------------------------");
-//                                    Log.d("Fuck", weather.getDateTimeForecasted());
-//                                    Log.d("Fuck", Integer.toString(weather.getDt()));
-//                                    Log.d("Fuck", Double.toString(weather.getWeatherMain().getTemperature()));
-//                                    Log.d("Fuck", Double.toString(weather.getWeatherMain().getFeelsLike()));
-//                                }
-//                                Gson gson = new Gson();
-//                                String weather_now = gson.toJson(weathernow);
-//                                String weather_daily = gson.toJson(weatherdaily);
-//                                String weather_weekly = gson.toJson(weatherweekly);
-//
-//                                Intent i = new Intent(SplashScreen.this, MainActivity.class);
-//                                i.putExtra("now",weather_now);
-//                                i.putExtra("daily",weather_daily);
-//                                i.putExtra("weekly",weather_weekly);
-//                                startActivity(i);
-//
-//                            }
-//
-//                            @Override
-//                            public void onError(@NonNull Throwable e) {
-//                                Log.d("DEBUG1", "Fail " + e.getMessage());
-//
-//                            }
-//                        });
             }
         };
 
@@ -230,6 +213,23 @@ public class SplashScreen extends AppCompatActivity {
                     }
                 }).check();
 
+    }
+
+    private void openNextActivity(){
+        count +=1;
+//        System.out.println(String.valueOf(count) + "count nè");
+        if(count >2){
+            Gson gson = new Gson();
+            String weather1 = gson.toJson(list1);
+            String weather2 = gson.toJson(list2);
+            String weather3 = gson.toJson(list3);
+
+            Intent i = new Intent(SplashScreen.this, MainActivity.class);
+            i.putExtra("city1",weather1);
+            i.putExtra("city2",weather2);
+            i.putExtra("city3",weather3);
+            startActivity(i);
+        }
     }
 
 
