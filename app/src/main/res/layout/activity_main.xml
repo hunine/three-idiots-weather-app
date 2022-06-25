@@ -42,6 +42,7 @@
                                 android:layout_height="wrap_content"/>
                         </LinearLayout> -->
             <TextView
+                android:id="@+id/txtDate"
                 android:layout_width="wrap_content"
                 android:text="Today, 19th May 2022"
                 android:textColor="@color/textcolor"

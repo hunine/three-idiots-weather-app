@@ -19,6 +19,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private int viewpager_position =0;
     private FragmentStateAdapter pageradapter;
 
+    private TextView txtDate;
     private TextView txtWindy;
     private TextView txtHum;
     private TextView txtFeellike;
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         txtPrecipation = findViewById(R.id.txtPrecitation);
         txtTime = findViewById(R.id.txt_time);
         txtCity = findViewById(R.id.txtCity);
+        txtDate = findViewById(R.id.txtDate);
 
         btnHourly = findViewById(R.id.btn_hourly);
         btnDaily = findViewById(R.id.btn_daily);
@@ -85,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
         SetTexthourly(weather1);
 
-
+        SimpleDateFormat formatter= new SimpleDateFormat("dd MMMM yyyy");
+        Date date = new Date(System.currentTimeMillis());
+        txtDate.setText(formatter.format(date));
 
         viewpage.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -164,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                         SetTextdaily(weather3);
                         break;
                 }
-                txtTime.setText("Weather tomorow");
+                txtTime.setText("Weather tomorrow");
                 Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce2);
                 txtTime.startAnimation(anim);
                 ResetButtonColor();
