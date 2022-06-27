@@ -1,4 +1,4 @@
-package com.threeidiots.myapplication;
+package com.threeidiots.myapplication.view;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -17,6 +17,8 @@ import android.widget.VideoView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.threeidiots.myapplication.R;
 
 import java.lang.reflect.Field;
 

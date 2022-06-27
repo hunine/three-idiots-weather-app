@@ -1,4 +1,4 @@
-package com.threeidiots.myapplication;
+package com.threeidiots.myapplication.view;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -41,6 +41,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.threeidiots.myapplication.R;
 import com.threeidiots.myapplication.model.Weather;
 import com.threeidiots.myapplication.model.WeatherList;
 import com.threeidiots.myapplication.viewmodel.WeatherApiService;
@@ -293,6 +294,8 @@ public class SplashScreen extends AppCompatActivity {
             startLocationUpdates();
         }
     }
+
+
 
     @Override
     protected void onPause() {

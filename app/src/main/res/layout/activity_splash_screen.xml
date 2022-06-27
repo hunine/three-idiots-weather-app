@@ -7,7 +7,7 @@
 
     android:background="@color/backgroundcolor"
     android:theme="@style/ThemeOverlay.WeatherApp.FullscreenContainer"
-    tools:context=".SplashScreen">
+    tools:context=".view.SplashScreen">
 
     <TextView
         android:id="@+id/textView"

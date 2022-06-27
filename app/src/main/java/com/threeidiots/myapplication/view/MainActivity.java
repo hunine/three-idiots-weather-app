@@ -1,4 +1,4 @@
-package com.threeidiots.myapplication;
+package com.threeidiots.myapplication.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import com.google.gson.Gson;
+import com.threeidiots.myapplication.R;
 import com.threeidiots.myapplication.model.Weather;
 import com.threeidiots.myapplication.model.WeatherList;
 

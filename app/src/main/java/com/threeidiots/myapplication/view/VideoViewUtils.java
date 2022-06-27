@@ -1,4 +1,4 @@
-package com.threeidiots.myapplication;
+package com.threeidiots.myapplication.view;
 
 import android.content.Context;
 import android.net.Uri;
